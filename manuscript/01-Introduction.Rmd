@@ -1,5 +1,14 @@
 # Introduction {#intro}
 
+WIP:
+
+- Tell the background story for this book idea
+  - (everybody has its own favourite algorithmn)
+  - kaggle dominance of fancy stacked models which are not usable in real life (see netflix competition)
+  - find the best algorithm for each situation depending on several criteria
+- Structure of the book
+
+
 You can label chapter and section titles using `{#label}` after them, e.g., we can reference Chapter \@ref(intro). If you do not manually label them, there will be automatic labels anyway, e.g., Chapter \@ref(methods).
 
 Figures and tables with captions will be placed in `figure` and `table` environments, respectively.

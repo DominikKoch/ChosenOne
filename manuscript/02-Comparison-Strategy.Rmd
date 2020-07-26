@@ -1,0 +1,25 @@
+# Comparison Strategy {#strategy}
+
+WIP:
+
+How to compare the myriad of machine learning algorithms
+- Accuracy in general
+- Speed
+  - Learning
+  - Scoring
+- Interpretability
+  - Parameter Interpretation possible
+  - Feature Importance
+  - Model Agnostic Methods
+- Training
+  - Model assumptions
+  - # samples needed
+  - Scalability
+  - n<<p case
+  - online learning
+- Tolerance
+  - interdependent attributes
+  - redundant attributes
+  - irrelevant attributes
+- Simplicity
+  - how many hyperparameters do I need to tune to get good results

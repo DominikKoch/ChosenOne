@@ -1,0 +1,12 @@
+# Benchmark {#benchmark}
+
+WIP:
+
+- Describe the used Datasets
+- Benchmark Szenarios
+  - different training size
+  - different variable types
+  - interdependent/redundant/irrelevant attributes
+  - n<<p case
+  - missing data
+- Benchmark Code

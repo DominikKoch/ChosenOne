@@ -1,0 +1,8 @@
+# Machine Learning Algorithms {#algorithms}
+
+WIP:
+
+- table of all algorithms that I want to compare
+ - Supervised
+ - Unsupervised
+

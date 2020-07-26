@@ -1,0 +1,5 @@
+# Interactive Dashboard {#dashboard}
+
+WIP:
+
+- Filter to find the most suited algorithm for the use case at hand
