@@ -2,7 +2,50 @@
 
 WIP:
 
-- table of all algorithms that I want to compare
- - Supervised
- - Unsupervised
+- hyperparameters
+- fill algorithm sections
 
+This chapter lists all kinds of regression and classification algorithms, that I want to compare in this book. You will find algorithms from both the supervised and unsupervised faction. In addition to the names of the algorithms I introduce short names, which are used in the visualizations.
+In addition, I give a brief overview of the most important hyperparameters of each algorithm, which should be given the most attention during the hyperparameter tuning step.
+
+Click on the short name to go directly to the corresponding section. For further information about the package, click on the package name.
+
+```{r algorithms-tab, tidy = FALSE, echo = FALSE, message = FALSE, warning = FALSE}
+
+# Import Excel sheet containing the algorithm overview
+library(readxl)
+df <- read_excel("algorithms.xlsx", sheet = 1)
+
+# change order
+library(dplyr)
+df <- df %>% arrange(shortname)
+
+# Add link to sections to the shortname
+df <- df %>% 
+  mutate(shortname = sprintf("[%1$s](#%1$s)", shortname))
+
+# Add link to rdocuments to the package column
+df <- df %>% 
+  mutate(package = sprintf("[%1$s](%2$s%1$s)", package, "https://www.rdocumentation.org/packages/"))
+
+# Nicer column names
+colnames(df) <- c("Short name", "Model name", "Type", "Package", "Hyperparameters")
+
+# Create table
+knitr::kable(
+  df, caption = 'List of Machine Learning Algorithms',
+  booktabs = TRUE
+)
+```
+
+For each of the listed algorithms I will create the radar chart with the rating after a short theory section. Futhermore, all advantages and disadvantages are listed, which go beyond the criteria shown in the radar chart.
+Last but not leas I will highlight the most important hyperparameters, so that a more efficient hyperparameter tuning is possible.
+
+## Regression
+...
+
+### glm - Generalized Linear Regression {#glm}
+...
+
+## Classification
+...
