@@ -1,25 +1,55 @@
 # Comparison Strategy {#strategy}
 
-WIP:
+All too often, the choice of the algorithm used is made primarily on the basis of its accuracy. But there are many more features that need to be considered. Since the breakthrough of Deep Learning, the lack of interpretability of these algorithms has been a thorn in the side of many users. In addition, there are a number of other criteria that need to be considered when looking for the appropriate algorithm. Since many criteria are competing with each other, it is important to weigh up which characteristics are absolutely necessary for your use case and which ones are nice to have.
 
-How to compare the myriad of machine learning algorithms
-- Accuracy in general
-- Speed
-  - Learning
-  - Scoring
-- Interpretability
-  - Parameter Interpretation possible
-  - Feature Importance
-  - Model Agnostic Methods
-- Training
-  - Model assumptions
-  - # samples needed
-  - Scalability
-  - n<<p case
-  - online learning
-- Tolerance
-  - interdependent attributes
-  - redundant attributes
-  - irrelevant attributes
-- Simplicity
-  - how many hyperparameters do I need to tune to get good results
+## Criteria
+
+I decided to summarize these characteristics into six criteria, which should allow a good comparison of the algorithms.
+
+**Accuracy in general:** A high accuracy is actually always a must have criterion. However, this is sometimes achieved at the expense of other characteristics. In order to be able to classify the accuracy, benchmark tests are carried out in Chapter \@ref(benchmark) using different data sets to ensure a fair comparison. To perform well in this category, an algorithm should perform well in different use cases and not be a one hit wonder. Since perfect accuracy is rarely possible, the evaluation is always carried out in direct comparison with the other algorithms.
+
+**Speed:** Especially when dealing with large amounts of data, speed can play an essential role. A distinction must be made between the time required for the model training and the time required for the scoring. Model training speed is more important if the model has to be recalibrated frequently. Scoring speed becomes important if live training is required. In batch scoring mode the speed is only important if the algorithm is too slow to process the amount of incoming data. If you only have to score a small amount of data once this characteristic can be ignored.
+
+**Interpretability:** In general, the simpler the model, the better the interpretability. In the best case one can see the actual effect of a feature on the prediction. This is the case for example with linear models or decision trees. More complex algorithms, on the other hand, usually only offer the option of identifying which feature has the greatest influence on the result, the so called variable importance. However, one only knows that an influence exists and does not learn about its strength and direction.
+Deep learning algorithms or stacked models which are pretty popular in Kaggle competitions, are usually black boxes in which the algorithms themselves do not allow conclusions about the effect of individual features.
+But even if the algorithm itself gives no further information about its individual feature effects, there is a selection of model agnostic methods with which one can bring light into the dark. A good source of information on this topic is the book Interpretable Machine Learning [@molnar2019] which is available free of charge.
+
+**Training Requirements:** Some algorithms are accompanied by certain assumptions which must be fulfilled by the data sets. It is usually the user's task to ensure that all these assumptions are actually met. Also the minimum number of observations required for the model training can vary greatly. We live in the Big Data age, but there are always use cases where for various reasons only a small number of observations are available. An extreme case of this can be that even more variables than observations are available. This can be a show-stopper for many algorithms. On the other hand, scalability play an increasingly important role nowadays. It is relatively easy to rent a large computing cluster but why spend extra money when there are algorithms that scale better than others?
+Last but not least, online learning options should be emphasized. Some algrotihms offer the possibility to improve an existing model with newly added observations without starting the training completely from scratch.
+
+**Tolerance:** Each data set has its own pitfalls that the algorithm must be able to deal with. Or you know the limits of the algorithm and prepare the data in advance. These pitfalls include missing data, interdependent attributes, redundant attributes and irrelevant attributes. Some algorithms can save the user a lot of time by making the data preparation step obsolete. However, one should always keep in mind that every algorithm is grateful to receive clean data as stated in the "garbage in, garbage out" concept.
+
+**Simplicity:** Finally, one should consider the complexity of simplicity of an algorithm. The more hyperparameters an algorithm has, the more precisely it can be adopted to the users specific use case. However, this requires a deep knowledge of the algorithm itself or its implementation. Different implementations of the same concept provide the user different degrees of freedom when calibrating the algorithm. At this point, Citizen Data Scientists who want to test a new fancy algorithm they have stumbled upon by reusing code snippets from the tutorial or stack overflow often fail. Without worrying about the hyperparameters they will most likely be surprised by bad results.
+
+To ensure a fair comparison of the algorithms, I will take a closer look at the following characteristics and evaluate them for each algorithm on a 5 point scale.
+
+## Radar Chart
+
+In order to be able to compare the myriad of machine learning algorithms better, the mentioned characteristics are illustrated in a radar chart. The better an algorithm scores in a category, the further out the point is visualized. A perfect algorithm would therefore completely surround the radar chart. 
+
+
+```{r radar-chart-example, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = 'Algorithm comparison example.'}
+require("echarts4r")
+
+df <- data.frame(
+  criteria = c("Accuracy","Speed","Requirements","Tolerance","Simplicity","Interpretability"),
+  omit = 999,
+  algo1 = c(3,5,4,4,3,5),
+  algo2 = c(1,4,4,4,5,2),
+  x = 1,
+  y = 3,
+  z = 5
+)
+
+df %>% 
+  e_charts(criteria) %>% 
+  e_radar(omit, max = 5, name = "radar", legend = FALSE) %>% # highlight doesn't work for first radar
+  e_radar(algo1, max = 5, name = "example") %>%
+  #e_radar(algo2, max = 5, name = "algo2") %>%
+  e_radar(x, max = 5, name = "worst") %>%
+  e_radar(y, max = 5, name = "average") %>%
+  e_radar(z, max = 5, name = "best") %>%
+  e_tooltip(trigger = "item") %>% 
+  e_color(c("grey","blue","red","orange","green"))
+
+```
